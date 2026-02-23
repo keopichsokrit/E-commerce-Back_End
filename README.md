@@ -68,7 +68,59 @@ Dependencies:
 # npm install axios@^1.6.4 bcryptjs@^2.4.3 cloudinary@^2.9.0 cors@^2.8.5 dotenv@^16.3.1 express@^4.18.2 express-rate-limit@^7.0.1 express-validator@^7.0.1 helmet@^7.1.2 jsonwebtoken@^9.0.3 mongoose@^7.5.1 morgan@^1.10.0 multer@^1.4.5-lts.2 winston@^3.10.0 winston-daily-rotate-file@^4.7.1
 
 # npm install cloudinary@2.9.0 jsonwebtoken@9.0.3
-Ports:
+Ports for testing:
 
 # http://localhost:5000/
 
+how to test User JWT authentication with POSTMAN: 
+
+1️. Test Authentication Endpoints
++ Register a User
+
+Method: POST
+
+URL: http://localhost:5000/api/auth/register
+
+Body (JSON):
+
+    {
+    "name": "Sokrit",
+    "email": "sokrit@test.com",
+    "password": "123456"
+    }
+Expected: JWT token in response.
+
++ Login a User
+
+Method: POST
+
+URL: http://localhost:5000/api/auth/login
+
+Body (JSON):
+
+    {
+    "email": "sokrit@test.com",
+    "password": "123456"
+    }
+
+Expected: JWT token (copy this for protected routes).
+
+After login, save this token in Postman collection variable or environment variable ({{token}}).
+
+2️. Test Protected Routes
++ Get User Profile
+
+Method: GET
+
+URL: http://localhost:5000/api/users/profile
+
+Headers:
+     
+| Key           | Value                          |
+|---------------|--------------------------------|
+| Authorization | Bearer YOUR_TOKEN_HERE         |
+
+Replace YOUR_TOKEN_HERE with the token from login.
+
+
+Expected: Returns user info (without password).
